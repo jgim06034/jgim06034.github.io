@@ -1,0 +1,1376 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ARCHIVE — 문학·사유·비평 커튼월 아카이브</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- 하이엔드 에디토리얼 세리프 & 건축적 타이포그래피 폰트 -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@300;400;500&family=Noto+Sans+KR:wght@300;400;500&family=Noto+Serif+KR:wght@200;300;400;500;600&display=swap" rel="stylesheet" />
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            display: ['"Cormorant Garamond"', '"Noto Serif KR"', 'serif'],
+            sans: ['"Inter"', '"Noto Sans KR"', 'sans-serif'],
+            serif: ['"Noto Serif KR"', '"Cormorant Garamond"', 'serif'],
+            mono: ['"JetBrains Mono"', 'monospace'],
+          },
+          colors: {
+            /* Warm Alabaster, Smoked Obsidian & Anodized Bronze Materiality */
+            canvas: '#F7F5F0',
+            panel: '#EFECE6',
+            vitrine: '#FAF9F6',
+            obsidian: '#0E0E0E',
+            obsidianSoft: '#161616',
+            ink: '#141311',
+            muted: '#5E5A54',
+            bronze: '#8A7E72',
+            mullion: 'rgba(28, 25, 22, 0.14)',
+            mullionStrong: 'rgba(28, 25, 22, 0.28)',
+            /* The One Gallery Art Accents */
+            crimson: '#C81D25',
+            emerald: '#0A5C36',
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    /* 커튼월 건축 원칙: 모든 둥근 모서리와 그림자 제거, 고정폭 숫자(Tabular Numerals) 적용 */
+    *, *::before, *::after {
+      border-radius: 0 !important;
+      box-shadow: none !important;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      background-color: #F7F5F0;
+      color: #141311;
+      font-variant-numeric: tabular-nums;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    /* 미세한 석회암/알라배스터 텍스처 깊이감 */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 60;
+      opacity: 0.025;
+      background-image: radial-gradient(#141311 0.65px, transparent 0.65px);
+      background-size: 16px 16px;
+    }
+
+    /* 상단 트랜섬(Transom) 반투명 아노다이즈드 글래스 효과 */
+    .glass-transom {
+      background-color: rgba(247, 245, 240, 0.86);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+
+    /* 건축 멀리언 교차점 십자(+) 조이너리 마크 */
+    .joinery-cross {
+      position: relative;
+    }
+    .joinery-cross::after {
+      content: "+";
+      position: absolute;
+      right: -5px;
+      bottom: -8px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      line-height: 1;
+      color: #8A7E72;
+      pointer-events: none;
+      z-index: 20;
+    }
+
+    /* 건축 도면 스타일 GRID OVERLAY */
+    .curtain-grid-overlay {
+      background-image:
+        linear-gradient(to right, rgba(138, 126, 114, 0.16) 1px, transparent 1px),
+        linear-gradient(to bottom, rgba(138, 126, 114, 0.12) 1px, transparent 1px);
+      background-size: 8.333333% 72px;
+    }
+
+    /* 유압식 댐퍼처럼 묵직하고 매끄러운 건축 트랜지션 */
+    .hydraulic-transition {
+      transition: all 600ms cubic-bezier(0.19, 1, 0.22, 1);
+    }
+
+    /* 뷰 전환 시 우아한 안착 애니메이션 */
+    @keyframes architecturalSettle {
+      0% {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    .view-settle {
+      animation: architecturalSettle 650ms cubic-bezier(0.19, 1, 0.22, 1) forwards;
+    }
+
+    /* 갤러리 작품 쇼케이스 호버: 좌측 플럼 라인(Plumb Line) 확장 및 실크 조도 변화 */
+    .gallery-vitrine {
+      position: relative;
+      transition: background-color 650ms cubic-bezier(0.19, 1, 0.22, 1);
+    }
+    .gallery-vitrine::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background-color: var(--accent-color, #0E0E0E);
+      transform: scaleY(0);
+      transform-origin: top;
+      transition: transform 600ms cubic-bezier(0.19, 1, 0.22, 1);
+    }
+    .gallery-vitrine:hover {
+      background-color: #FAF9F6;
+    }
+    .gallery-vitrine:hover::before {
+      transform: scaleY(1);
+    }
+    .gallery-vitrine .vitrine-title {
+      transition: transform 600ms cubic-bezier(0.19, 1, 0.22, 1), color 450ms ease;
+    }
+    .gallery-vitrine:hover .vitrine-title {
+      transform: translateX(6px);
+    }
+
+    /* 시(Poetry) 조판: 갤러리 플레이트(Gallery Plate) 연 프레임과 여백 */
+    .typo-poetry {
+      font-family: 'Noto Serif KR', serif;
+      font-weight: 300;
+      line-height: 2.35;
+      letter-spacing: 0.01em;
+      white-space: pre-line;
+      color: #141311;
+    }
+
+    /* 사유(Thought) 조판: 모노그래프 드롭캡과 로마/십진 절 구분선 */
+    .typo-thought p {
+      font-family: 'Noto Serif KR', serif;
+      font-weight: 300;
+      line-height: 2.05;
+      margin-bottom: 2rem;
+      color: #1C1A17;
+      word-break: keep-all;
+    }
+    .typo-thought p:first-of-type::first-letter {
+      float: left;
+      font-family: 'Cormorant Garamond', 'Noto Serif KR', serif;
+      font-size: 3.4rem;
+      line-height: 0.85;
+      padding-right: 0.85rem;
+      padding-top: 0.2rem;
+      color: #0A5C36;
+      font-weight: 400;
+    }
+    .typo-thought h3 {
+      font-family: 'Cormorant Garamond', 'Noto Serif KR', serif;
+      font-weight: 500;
+      font-size: 1.35rem;
+      letter-spacing: 0.01em;
+      margin-top: 3.5rem;
+      margin-bottom: 1.25rem;
+      padding-top: 1.25rem;
+      border-top: 1px solid rgba(10, 92, 54, 0.35);
+      color: #0A5C36;
+    }
+
+    /* 비평(Criticism) 조판: 아카이브 도시에(Dossier) 인용선 */
+    .typo-criticism p {
+      font-family: 'Noto Sans KR', sans-serif;
+      font-weight: 300;
+      line-height: 2.0;
+      margin-bottom: 1.85rem;
+      color: #1C1A17;
+      word-break: keep-all;
+    }
+    .typo-criticism blockquote {
+      border-left: 2px solid #0E0E0E;
+      padding: 1.5rem 1.75rem;
+      margin: 2.5rem 0;
+      font-family: 'Cormorant Garamond', 'Noto Serif KR', serif;
+      font-size: 1.12rem;
+      line-height: 1.95;
+      color: #0E0E0E;
+      background-color: #EFECE6;
+    }
+
+    /* 커스텀 스크롤바 */
+    ::-webkit-scrollbar {
+      width: 4px;
+      height: 4px;
+    }
+    ::-webkit-scrollbar-track {
+      background: #F7F5F0;
+      border-left: 1px solid rgba(28, 25, 22, 0.14);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: #8A7E72;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col bg-canvas text-ink font-sans selection:bg-obsidian selection:text-canvas">
+
+  <!-- 건축 도면 스타일 GRID OVERLAY 레이어 -->
+  <div id="gridOverlay" class="fixed inset-0 pointer-events-none z-50 hidden curtain-grid-overlay">
+    <!-- 좌측 35% 코어 축 보조선 -->
+    <div class="hidden lg:block fixed top-0 bottom-0 left-[35%] w-[1px] bg-crimson/60"></div>
+    <!-- 건축 도면 치수 및 축 콜아웃 -->
+    <div class="hidden lg:flex fixed top-[88px] left-6 items-center space-x-2 bg-obsidian text-canvas font-mono text-[9px] tracking-[0.22em] px-3 py-1.5 uppercase border-l-2 border-crimson">
+      <span>AXIS A · 35% STRUCTURAL CORE</span>
+    </div>
+    <div class="hidden lg:flex fixed top-[88px] left-[calc(35%+24px)] items-center space-x-2 bg-obsidian text-canvas font-mono text-[9px] tracking-[0.22em] px-3 py-1.5 uppercase border-l-2 border-emerald">
+      <span>AXIS B · 65% CANTILEVER GLASS SPAN</span>
+    </div>
+    <div class="fixed bottom-16 right-6 bg-obsidian text-canvas font-mono text-[9px] tracking-[0.22em] px-3 py-1.5 uppercase">
+      ELEVATION MODULE: 12-COL / 72PX TRANSOM
+    </div>
+  </div>
+
+  <!-- 1. 상단 고정 트랜섬(Transom) 바 + 읽기 진행률 헤어라인 -->
+  <header class="sticky top-0 z-40 w-full border-b border-mullion glass-transom">
+    <!-- 최상단 건축 스펙 스트립 -->
+    <div class="hidden sm:flex w-full border-b border-mullion px-6 md:px-10 py-1.5 justify-between items-center font-mono text-[9px] tracking-[0.24em] text-bronze uppercase">
+      <span>MONOGRAPH SERIES · BEL AIR CURTAIN WALL PROPORTION</span>
+      <span class="flex items-center space-x-4">
+        <span>SPAN 35 : 65</span>
+        <span>·</span>
+        <span>ALABASTER / OBSIDIAN / BRONZE</span>
+      </span>
+    </div>
+
+    <div class="w-full flex flex-col md:flex-row md:items-stretch justify-between relative">
+      <!-- 좌측 코어 타이틀 영역 (데스크톱 35% 폭 + 조이너리 십자 마크) -->
+      <div class="w-full lg:w-[35%] px-6 md:px-10 py-4 md:py-5 border-b md:border-b-0 md:border-r border-mullion joinery-cross flex items-center justify-between">
+        <button onclick="navigateTo('index')" class="text-left group focus:outline-none flex items-center space-x-3.5">
+          <span class="w-2 h-2 bg-crimson inline-block shrink-0 hydraulic-transition group-hover:scale-125" aria-hidden="true"></span>
+          <div>
+            <div class="font-mono text-[9px] tracking-[0.25em] text-bronze uppercase">LITERARY GALLERY &amp; ARCHIVE</div>
+            <div class="font-display text-xl md:text-2xl font-normal tracking-tight text-ink mt-0.5 group-hover:opacity-70 hydraulic-transition">
+              윤서진 <span class="italic font-light text-bronze mx-1">/</span> <span class="font-mono text-xs tracking-[0.22em] uppercase">ARCHIVE</span>
+            </div>
+          </div>
+        </button>
+
+        <!-- 모바일용 그리드 토글 -->
+        <button onclick="toggleGridOverlay()" class="md:hidden font-mono text-[10px] tracking-[0.18em] border border-mullionStrong px-2.5 py-1.5 text-muted hover:border-obsidian hover:text-obsidian hydraulic-transition">
+          ELEVATION
+        </button>
+      </div>
+
+      <!-- 우측 수평 스팬 내비게이션 (65% 폭) -->
+      <div class="w-full lg:w-[65%] px-6 md:px-12 py-3 md:py-0 flex items-center justify-between">
+        <nav aria-label="주 메뉴" class="flex items-center space-x-7 sm:space-x-11 h-full">
+          <button data-nav="index" onclick="navigateTo('index')" class="nav-btn relative py-2 md:py-6 font-mono text-[11px] tracking-[0.22em] uppercase hydraulic-transition">
+            INDEX
+          </button>
+          <button data-nav="archive" onclick="navigateTo('archive')" class="nav-btn relative py-2 md:py-6 font-mono text-[11px] tracking-[0.22em] uppercase hydraulic-transition">
+            ARCHIVE
+          </button>
+          <button data-nav="series" onclick="navigateTo('series')" class="nav-btn relative py-2 md:py-6 font-mono text-[11px] tracking-[0.22em] uppercase hydraulic-transition">
+            SERIES
+          </button>
+          <button data-nav="about" onclick="navigateTo('about')" class="nav-btn relative py-2 md:py-6 font-mono text-[11px] tracking-[0.22em] uppercase hydraulic-transition">
+            ABOUT
+          </button>
+        </nav>
+
+        <!-- 건축 도면 그리드 토글 스위치 -->
+        <div class="hidden md:flex items-center space-x-4">
+          <button id="gridToggleBtn" onclick="toggleGridOverlay()" class="font-mono text-[10px] tracking-[0.2em] uppercase border border-mullionStrong px-3.5 py-2 text-muted hover:border-obsidian hover:text-obsidian hydraulic-transition flex items-center space-x-2.5">
+            <span id="gridIndicator" class="w-1.5 h-1.5 bg-bronze inline-block hydraulic-transition"></span>
+            <span>ELEVATION GRID</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 독서 진행률 헤어라인 (상세 글 읽기 시 스크롤에 따라 부드럽게 신장) -->
+    <div id="readingProgressTrack" class="w-full h-[2px] bg-transparent overflow-hidden">
+      <div id="readingProgressBar" class="h-full w-0 bg-crimson transition-[width] duration-150 ease-out"></div>
+    </div>
+  </header>
+
+  <!-- 2. 메인 뷰포트 (SPA 동적 렌더링 영역) -->
+  <main id="appRoot" class="flex-1 w-full flex flex-col">
+    <!-- JavaScript에서 현재 라우트에 따라 커튼월 레이아웃을 렌더링 -->
+  </main>
+
+  <!-- 3. 하단 수평 슬래브(Slab) 바 — Smoked Obsidian 건축 기단부 -->
+  <footer class="w-full border-t border-mullion bg-obsidian text-canvas mt-auto">
+    <div class="w-full flex flex-col lg:flex-row">
+      <div class="w-full lg:w-[35%] px-6 md:px-10 py-6 border-b lg:border-b-0 lg:border-r border-white/10 flex items-center justify-between font-mono text-[10px] text-bronze tracking-[0.2em]">
+        <div class="flex items-center space-x-2.5">
+          <span class="w-1.5 h-1.5 bg-emerald inline-block"></span>
+          <span>35°13'N 128°40'E · CURTAIN WALL MONOGRAPH</span>
+        </div>
+        <span>ED. 2026</span>
+      </div>
+      <div class="w-full lg:w-[65%] px-6 md:px-12 py-6 flex flex-col sm:flex-row sm:items-center justify-between gap-3 font-mono text-[10px] tracking-[0.18em] text-white/60">
+        <div class="flex items-center space-x-4">
+          <span>© 2026 YOON SEO-JIN. ALL LITERARY WORKS ARCHIVED.</span>
+          <!-- The One 갤러리 아트 컬러 스와치 -->
+          <span class="inline-flex items-center space-x-1.5" title="The One Gallery Palette: Crimson / Emerald / Obsidian">
+            <span class="w-2 h-2 bg-crimson inline-block"></span>
+            <span class="w-2 h-2 bg-emerald inline-block"></span>
+            <span class="w-2 h-2 bg-canvas inline-block"></span>
+          </span>
+        </div>
+        <span class="text-bronze uppercase">BESPOKE ARCHITECTURAL EDITION</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- 애플리케이션 데이터 및 라우팅 스크립트 -->
+  <script>
+    // =========================================================================
+    // 1. 문학 아카이브 데이터베이스 (시, 사유, 비평 7편 + 연재 3묶음)
+    // =========================================================================
+    const WORKS_DATA = [
+      {
+        id: 'work-007',
+        no: '007',
+        roman: 'VII',
+        category: '시',
+        categoryEn: 'POETRY',
+        date: '2026.11.20',
+        readingTime: '02 MIN',
+        title: '수평 슬래브 위의 정오',
+        excerpt: '그림자가 바닥에 닿기 전 가장 얇은 선으로 머무는 시간,\n유리벽은 바깥의 소음을 통과시키지 않고 빛의 밀도만 남긴다.',
+        tags: ['건축적시학', '정오', '투명성'],
+        seriesId: 'series-01',
+        metaNote: '연작 〈투명한 입면들〉 세 번째 판화(Plate III).',
+        content: `그림자가 바닥에 닿기 전
+가장 얇은 선으로 머무는 시간
+
+유리벽은 바깥의 소음을 통과시키지 않고
+오직 빛의 밀도만을 안쪽으로 밀어 넣는다
+
+나는 허공에 걸린 캔틸레버 끝에 서서
+아직 쓰이지 않은 문장의 하중을 잰다
+기둥 없이 뻗어 나간 바닥면처럼
+어떤 고백은 지탱할 근거 없이도 무너지지 않는다
+
+멀리언과 멀리언 사이
+절단된 하늘이 규격대로 놓여 있고
+바람은 모서리를 꺾지 못한 채 직선으로 스쳐 간다
+
+정오의 문장은 그림자를 거느리지 않는다
+투명하다는 것은
+모든 것을 보여주면서 아무것도 소유하지 않는 일`
+      },
+      {
+        id: 'work-006',
+        no: '006',
+        roman: 'VI',
+        category: '사유',
+        categoryEn: 'THOUGHT',
+        date: '2026.11.15',
+        readingTime: '05 MIN',
+        title: '내력벽 없는 문장: 장르의 위계를 해체하는 글쓰기에 대하여',
+        excerpt: '우리는 왜 시와 에세이와 비평을 서로 다른 방에 가두려 하는가. 하중을 지지하는 얇은 프레임만 남긴 채 사유가 투과하는 공간을 설계한다.',
+        tags: ['글쓰기론', '커튼월사유', '형식과내용'],
+        seriesId: 'series-02',
+        metaNote: '개인 아카이브의 설계 철학을 정리한 모노그래프 단상.',
+        content: [
+          {
+            type: 'p',
+            text: '전통적인 건축에서 내력벽은 건물의 무게를 견디기 위해 두껍고 불투명해야 했다. 문학의 장르 구분 역시 오랫동안 내력벽처럼 작동해 왔다. 시는 압축의 방에, 사유는 성찰의 복도에, 비평은 분석의 서재에 각각 격리되어 서로의 시선을 차단했다.'
+          },
+          {
+            type: 'p',
+            text: '그러나 현대의 커튼월 구조가 보여주듯, 하중을 지탱하는 최소한의 수직·수평 프레임(멀리언)만 정밀하게 세워진다면 그 사이의 면적은 온전히 투명한 유리로 채워질 수 있다. 글쓰기에서도 중요한 것은 장르라는 두꺼운 벽체가 아니라, 언어의 밀도를 지탱하는 내적 비례와 여백의 배치다.'
+          },
+          {
+            type: 'h3',
+            text: 'I. 시적 직관과 비평적 거리의 공존'
+          },
+          {
+            type: 'p',
+            text: '하나의 질문은 때로 논증의 형태를 띠기 전에 먼저 이미지로 도착한다. 그 이미지를 행과 연의 여백 속에 놓아두면 시가 되고, 이미지가 발생시킨 개념의 균열을 추적하면 사유가 되며, 타인의 텍스트와 충돌시켜 좌표를 측정하면 비평이 된다.'
+          },
+          {
+            type: 'p',
+            text: '이 세 갈래는 우열의 관계가 아니라 동일한 빛이 서로 다른 굴절률의 유리를 통과하며 만들어내는 스펙트럼에 가깝다. 따라서 나의 아카이브는 이들을 위계화하지 않고 동일한 그리드 위에 나란히 배치한다.'
+          }
+        ]
+      },
+      {
+        id: 'work-005',
+        no: '005',
+        roman: 'V',
+        category: '비평',
+        categoryEn: 'CRITICISM',
+        date: '2026.11.08',
+        readingTime: '07 MIN',
+        title: '여백의 건축학: 침묵이 발화보다 길어지는 지점',
+        targetWork: '김연수, 『소설가의 일』 및 최근 단편들의 행간 분석',
+        targetAuthor: '김연수 (KIM YEON-SU)',
+        targetEdition: '문학동네 · 2024–2026 단편 선집',
+        excerpt: '설명하지 않음으로써 오히려 선명해지는 서사의 윤곽. 텍스트 내부에 의도적으로 배치된 공백이 독자의 사유를 호출하는 방식을 검토한다.',
+        tags: ['현대소설비평', '서사구조', '여백'],
+        seriesId: 'series-03',
+        metaNote: '계간지 투고 초고를 아카이브 도시에(Dossier) 형식에 맞게 재조판함.',
+        content: [
+          {
+            type: 'p',
+            text: '좋은 산문은 문장과 문장 사이의 이음매를 감추지 않는다. 오히려 그 틈새에 공기가 드나들 수 있는 정밀한 간격을 확보함으로써, 독자가 스스로 문장의 하중을 건너뛰게 만든다. 최근 발표된 일련의 단편들에서 두드러지는 특징은 사건의 인과를 촘촘히 메우는 대신, 결정적인 발화의 직전에 서사를 멈추고 넓은 여백을 배치하는 구조적 절제다.'
+          },
+          {
+            type: 'quote',
+            text: '“말해지지 않은 것들은 사라지는 것이 아니라, 말해지는 모든 문장의 바깥둘레를 규정하는 투명한 프레임으로 남는다.”'
+          },
+          {
+            type: 'p',
+            text: '이러한 방식은 로스앤젤레스 벨에어의 거대한 수평 건축물이 지닌 개방성과 닮아 있다. 벽을 세워 공간을 소유하는 대신, 바닥과 천장의 수평선만 길게 뻗어 풍경을 내부로 끌어들이는 태도다. 비평의 역할 역시 텍스트의 빈칸을 섣불리 해석으로 채워 넣는 것이 아니라, 그 여백이 지탱하고 있는 긴장의 비례를 정확히 측량하는 데 있다.'
+          }
+        ]
+      },
+      {
+        id: 'work-004',
+        no: '004',
+        roman: 'IV',
+        category: '시',
+        categoryEn: 'POETRY',
+        date: '2026.10.29',
+        readingTime: '02 MIN',
+        title: '벨에어의 야간 수영장',
+        excerpt: '수면과 밤하늘의 경계가 지워진 자리에서\n수평선은 더 이상 먼 곳의 약속이 아니다.',
+        tags: ['수평선', '밤', '경계'],
+        seriesId: 'series-01',
+        metaNote: '연작 〈투명한 입면들〉 두 번째 판화(Plate II).',
+        content: `수면과 밤하늘의 경계가 지워진 자리에서
+수평선은 더 이상 먼 곳의 약속이 아니다
+
+발끝이 닿지 않는 깊이를
+얇은 유리 난간 하나가 고요히 막아서고
+도시의 불빛들은 물결 위에서
+해체된 활자처럼 명멸한다
+
+이곳에서는 어떤 문장도 소리 내어 읽히지 않는다
+젖은 발자국이 대리석 위에서 증발하는 속도만큼
+기억은 가벼워지고
+
+우리는 끝없이 이어지는 수면의 가장자리에서
+추락하지 않으면서도 추락의 감각을 배운다`
+      },
+      {
+        id: 'work-003',
+        no: '003',
+        roman: 'III',
+        category: '사유',
+        categoryEn: 'THOUGHT',
+        date: '2026.10.18',
+        readingTime: '04 MIN',
+        title: '미니멀리즘은 결핍이 아니라 밀도의 압축이다',
+        excerpt: '장식을 덜어낸 자리에 남는 것은 공허가 아니다. 불필요한 수사를 제거할 때 비로소 드러나는 사유의 골격에 관한 기록.',
+        tags: ['미니멀리즘', '문체론', '절제'],
+        seriesId: 'series-02',
+        metaNote: '가을 작업 노트 발췌.',
+        content: [
+          {
+            type: 'p',
+            text: '미니멀리즘을 단순히 ‘적게 쓰는 것’이나 ‘비워두는 취향’으로 오해할 때 문장은 쉽게 앙상해진다. 진정한 미니멀리즘은 덜어낼 수 있는 모든 부수적 장식을 제거한 뒤에도 끝내 남아서 전체를 지탱하는 핵심 구조의 강도(強度)에 관한 문제다.'
+          },
+          {
+            type: 'h3',
+            text: 'I. 수사의 제거와 골격의 노출'
+          },
+          {
+            type: 'p',
+            text: '형용사와 부사를 하나씩 지워 나갈 때마다 문장은 스스로의 무게를 견뎌야 한다. 치장할 외피가 사라진 텍스트에서는 주어와 서술어의 결합 방식, 단락과 단락 사이의 비례가 곧 미학이 된다. 나는 내 글이 화려한 실내 장식이 아니라, 뼈대만으로도 공간의 품격을 결정짓는 커튼월 입면처럼 읽히기를 바란다.'
+          }
+        ]
+      },
+      {
+        id: 'work-002',
+        no: '002',
+        roman: 'II',
+        category: '비평',
+        categoryEn: 'CRITICISM',
+        date: '2026.10.05',
+        readingTime: '06 MIN',
+        title: '디지털 아카이브 시대의 개인 문학 공간 설계',
+        targetWork: '웹 타이포그래피와 현대 시집의 물성 비교 연구',
+        targetAuthor: '매체미학 연구 노트 (ARCHIVAL MONOGRAPH)',
+        targetEdition: '2026 가을 비평 세션',
+        excerpt: '종이책의 물성이 사라진 화면 위에서 텍스트는 어떻게 고유한 장소성을 획득하는가. 스크롤과 그리드가 만드는 새로운 독서 호흡.',
+        tags: ['매체비평', '타이포그래피', '아카이브'],
+        seriesId: 'series-03',
+        metaNote: '웹 아카이브 구축 전 작성한 매체 비평.',
+        content: [
+          {
+            type: 'p',
+            text: 'SNS의 타임라인은 모든 글을 동일한 규격의 소모품으로 평준화한다. 시 한 편과 단편적인 감상, 광고 문구가 같은 피드 위에서 0.5초 만에 스쳐 지나가는 환경에서 문학은 자신의 고유한 호흡을 잃어버린다.'
+          },
+          {
+            type: 'quote',
+            text: '“텍스트가 머무는 인터페이스의 구조는 곧 그 텍스트를 읽는 독자의 사유 속도를 결정한다.”'
+          },
+          {
+            type: 'p',
+            text: '개인 홈페이지를 구축한다는 것은 단순히 파일을 업로드할 서버를 마련하는 행위가 아니다. 그것은 나의 문장들이 가장 적절한 빛과 여백 속에서 숨 쉴 수 있도록 건축적 좌표를 설정하는 일이다.'
+          }
+        ]
+      },
+      {
+        id: 'work-001',
+        no: '001',
+        roman: 'I',
+        category: '시',
+        categoryEn: 'POETRY',
+        date: '2026.09.21',
+        readingTime: '02 MIN',
+        title: '첫 번째 프레임',
+        excerpt: '아무것도 적히지 않은 백지 위에\n수직선 하나를 긋는 일로 세계는 시작된다.',
+        tags: ['시작', '프레임', '백지'],
+        seriesId: 'series-01',
+        metaNote: '연작 〈투명한 입면들〉 첫 번째 판화(Plate I).',
+        content: `아무것도 적히지 않은 백지 위에
+수직선 하나를 긋는 일로 세계는 시작된다
+
+왼쪽에는 아직 도착하지 않은 질문들을 두고
+오른쪽에는 이미 지나간 계절의 빛을 세운다
+
+얇은 알루미늄 선처럼
+단단하지만 시야를 가리지 않는 경계
+
+나는 이제 이 투명한 격자 안으로
+나의 모든 문장을 초대한다`
+      }
+    ];
+
+    const SERIES_DATA = [
+      {
+        id: 'series-01',
+        code: 'COLLECTION I',
+        accentKey: '시',
+        title: '투명한 입면들 (Transparent Elevations)',
+        category: '연작 시 · POETRY PLATES',
+        period: '2026.09 — ONGOING',
+        description: '건축의 수평성, 유리벽, 빛의 투과성을 모티프로 삼아 언어와 공간의 관계를 탐구하는 연작 시집 초고.',
+      },
+      {
+        id: 'series-02',
+        code: 'COLLECTION II',
+        accentKey: '사유',
+        title: '무게 없는 구조 (Weightless Structures)',
+        category: '사유 묶음 · THOUGHT MONOGRAPHS',
+        period: '2026.10 — ONGOING',
+        description: '장르의 경계, 미니멀리즘 문체, 형식과 내용의 비례에 관해 스스로 던진 질문과 사유의 기록들.',
+      },
+      {
+        id: 'series-03',
+        code: 'COLLECTION III',
+        accentKey: '비평',
+        title: '텍스트의 좌표 측량 (Surveying Coordinates)',
+        category: '비평 선집 · CRITICAL DOSSIERS',
+        period: '2026.10 — ONGOING',
+        description: '동시대 문학 텍스트와 매체 환경이 만들어내는 서사적 여백과 구조적 미학을 분석하는 비평 아카이브.',
+      }
+    ];
+
+    // =========================================================================
+    // 2. 애플리케이션 상태 관리 (State) & 갤러리 아트 팔레트 헬퍼
+    // =========================================================================
+    const state = {
+      view: 'index',           // 'index' | 'archive' | 'series' | 'about' | 'post'
+      selectedCategory: 'ALL', // 'ALL' | '시' | '사유' | '비평'
+      sortOrder: 'desc',       // 'desc' (최신순) | 'asc' (오래된순)
+      selectedSeriesId: null,  // SERIES 뷰 필터용
+      currentPostId: null,     // POST 뷰 상세 글 ID
+      gridOverlay: false,      // 건축 도면 오버레이 여부
+    };
+
+    // 시 = 크림슨 레드(#C81D25), 사유 = 에메랄드 그린(#0A5C36), 비평 = 스모크드 옵시디언(#0E0E0E)
+    function getCategoryAccent(category) {
+      switch (category) {
+        case '시':
+          return {
+            hex: '#C81D25',
+            swatchClass: 'bg-crimson',
+            textClass: 'text-crimson',
+            borderClass: 'border-crimson',
+            badgeClass: 'border-crimson/40 text-crimson bg-crimson/[0.04]',
+          };
+        case '사유':
+          return {
+            hex: '#0A5C36',
+            swatchClass: 'bg-emerald',
+            textClass: 'text-emerald',
+            borderClass: 'border-emerald',
+            badgeClass: 'border-emerald/40 text-emerald bg-emerald/[0.04]',
+          };
+        case '비평':
+          return {
+            hex: '#0E0E0E',
+            swatchClass: 'bg-obsidian',
+            textClass: 'text-obsidian',
+            borderClass: 'border-obsidian',
+            badgeClass: 'border-obsidian/40 text-obsidian bg-obsidian/[0.04]',
+          };
+        default:
+          return {
+            hex: '#0E0E0E',
+            swatchClass: 'bg-obsidian',
+            textClass: 'text-obsidian',
+            borderClass: 'border-obsidian',
+            badgeClass: 'border-obsidian/30 text-obsidian bg-panel',
+          };
+      }
+    }
+
+    // =========================================================================
+    // 3. 네비게이션, 독서 진행률 및 인터랙션 핸들러
+    // =========================================================================
+    function navigateTo(view, options = {}) {
+      state.view = view;
+      if (options.category !== undefined) state.selectedCategory = options.category;
+      if (options.seriesId !== undefined) state.selectedSeriesId = options.seriesId;
+      if (options.postId !== undefined) state.currentPostId = options.postId;
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+      render();
+      updateReadingProgress();
+    }
+
+    function setCategoryFilter(category) {
+      state.selectedCategory = category;
+      render();
+    }
+
+    function setSortOrder(order) {
+      state.sortOrder = order;
+      render();
+    }
+
+    function openPost(postId) {
+      navigateTo('post', { postId });
+    }
+
+    function toggleGridOverlay() {
+      state.gridOverlay = !state.gridOverlay;
+      const overlay = document.getElementById('gridOverlay');
+      const indicator = document.getElementById('gridIndicator');
+      const btn = document.getElementById('gridToggleBtn');
+
+      if (state.gridOverlay) {
+        overlay.classList.remove('hidden');
+        if (indicator) indicator.classList.replace('bg-bronze', 'bg-crimson');
+        if (btn) btn.classList.add('border-obsidian', 'text-obsidian', 'bg-panel');
+      } else {
+        overlay.classList.add('hidden');
+        if (indicator) indicator.classList.replace('bg-crimson', 'bg-bronze');
+        if (btn) btn.classList.remove('border-obsidian', 'text-obsidian', 'bg-panel');
+      }
+    }
+
+    function updateReadingProgress() {
+      const bar = document.getElementById('readingProgressBar');
+      if (!bar) return;
+
+      if (state.view !== 'post') {
+        bar.style.width = '0%';
+        return;
+      }
+
+      const work = WORKS_DATA.find(w => w.id === state.currentPostId) || WORKS_DATA[0];
+      const accent = getCategoryAccent(work.category);
+      bar.style.backgroundColor = accent.hex;
+
+      const scrollTop = window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? Math.min(100, Math.max(0, (scrollTop / docHeight) * 100)) : 0;
+      bar.style.width = `${progress}%`;
+    }
+
+    window.addEventListener('scroll', updateReadingProgress, { passive: true });
+
+    function getFilteredWorks() {
+      let list = [...WORKS_DATA];
+      if (state.selectedCategory !== 'ALL') {
+        list = list.filter(w => w.category === state.selectedCategory);
+      }
+      if (state.selectedSeriesId) {
+        list = list.filter(w => w.seriesId === state.selectedSeriesId);
+      }
+      list.sort((a, b) => {
+        return state.sortOrder === 'desc'
+          ? b.date.localeCompare(a.date)
+          : a.date.localeCompare(b.date);
+      });
+      return list;
+    }
+
+    // =========================================================================
+    // 4. 뷰별 렌더링 템플릿
+    // =========================================================================
+
+    // [VIEW A] INDEX (홈 화면 — Smoked Obsidian 건축 플린스 + Alabaster 갤러리 유리면)
+    function renderIndexView() {
+      const categories = [
+        { code: '00', key: 'ALL', label: '전체 작품', en: 'ALL FOLIOS', accent: 'bg-canvas', textActive: 'text-canvas' },
+        { code: '01', key: '시', label: '시', en: 'POETRY', accent: 'bg-crimson', textActive: 'text-crimson' },
+        { code: '02', key: '사유', label: '사유', en: 'THOUGHT', accent: 'bg-emerald', textActive: 'text-emerald' },
+        { code: '03', key: '비평', label: '비평', en: 'CRITICISM', accent: 'bg-bronze', textActive: 'text-canvas' },
+      ];
+
+      const filteredWorks = WORKS_DATA.filter(w =>
+        state.selectedCategory === 'ALL' ? true : w.category === state.selectedCategory
+      );
+
+      const activeAccent = getCategoryAccent(state.selectedCategory);
+
+      return `
+        <div class="w-full flex-1 flex flex-col lg:flex-row view-settle">
+          <!-- 좌측 35% 고정 코어 컬럼 (Smoked Obsidian Architectural Wing) -->
+          <aside class="w-full lg:w-[35%] border-b lg:border-b-0 lg:border-r border-mullion bg-obsidian text-canvas">
+            <div class="lg:sticky lg:top-[95px] flex flex-col justify-between lg:min-h-[calc(100vh-165px)]">
+              <!-- 상단 갤러리 큐레이션 선언문 -->
+              <div class="p-8 md:p-12 border-b border-white/10 relative">
+                <div class="flex items-center justify-between mb-6">
+                  <span class="font-mono text-[9px] tracking-[0.25em] text-crimson uppercase">
+                    CURATORIAL STATEMENT
+                  </span>
+                  <span class="font-mono text-[9px] tracking-[0.2em] text-bronze">
+                    WING I
+                  </span>
+                </div>
+                <p class="font-display text-2xl md:text-[28px] leading-[1.45] text-canvas font-light tracking-tight">
+                  “언어라는 유리벽 너머로<br />
+                  시와 사유와 비평이<br />
+                  <span class="italic text-bronze">위계 없이 투과하는 공간.</span>”
+                </p>
+                <p class="mt-6 text-xs leading-[1.85] text-white/60 font-light">
+                  두꺼운 장르의 내력벽을 허물고 정밀한 멀리언과 광활한 여백만으로 구획한 개인 문학 갤러리입니다.
+                </p>
+              </div>
+
+              <!-- 갈래 필터 (Vertical Mullion Navigation) -->
+              <div class="p-8 md:p-12 flex-1 flex flex-col justify-between">
+                <div>
+                  <div class="font-mono text-[9px] tracking-[0.25em] text-bronze uppercase mb-5">
+                    TAXONOMY &amp; GALLERY PALETTE
+                  </div>
+                  <ul class="border-t border-white/10">
+                    ${categories.map(cat => {
+                      const isActive = state.selectedCategory === cat.key;
+                      const count = cat.key === 'ALL'
+                        ? WORKS_DATA.length
+                        : WORKS_DATA.filter(w => w.category === cat.key).length;
+                      return `
+                        <li class="border-b border-white/10">
+                          <button
+                            onclick="setCategoryFilter('${cat.key}')"
+                            class="w-full py-4 px-2 flex items-center justify-between text-left hydraulic-transition ${isActive ? 'bg-obsidianSoft text-canvas' : 'text-white/55 hover:text-canvas hover:bg-white/[0.03]'}"
+                          >
+                            <div class="flex items-center space-x-4">
+                              <span class="w-1.5 h-1.5 ${cat.accent} inline-block shrink-0"></span>
+                              <span class="font-mono text-[10px] tracking-[0.18em] text-bronze">${cat.code}</span>
+                              <span class="text-sm font-light tracking-tight">${cat.label}</span>
+                              <span class="font-mono text-[9px] tracking-[0.22em] text-white/35">${cat.en}</span>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                              <span class="font-mono text-[10px] text-bronze">${String(count).padStart(2, '0')}</span>
+                              <span class="font-mono text-[10px] ${isActive ? 'opacity-100 text-crimson' : 'opacity-0'} hydraulic-transition">—</span>
+                            </div>
+                          </button>
+                        </li>
+                      `;
+                    }).join('')}
+                  </ul>
+                </div>
+
+                <!-- 하단 건축 비례 명세 -->
+                <div class="mt-12 pt-6 border-t border-white/10 hidden lg:flex items-center justify-between font-mono text-[9px] text-bronze tracking-[0.22em]">
+                  <span>PROPORTION 35 : 65</span>
+                  <span>THE ONE INSPIRED</span>
+                </div>
+              </div>
+            </div>
+          </aside>
+
+          <!-- 우측 65% 대형 알라배스터 유리 패널 영역 (Floor-to-Ceiling Glass Span) -->
+          <section class="w-full lg:w-[65%] flex flex-col bg-canvas">
+            <!-- 수평 스팬 상태 바 -->
+            <div class="px-6 md:px-14 py-4 border-b border-mullion bg-panel/70 flex items-center justify-between">
+              <div class="font-mono text-[10px] tracking-[0.22em] text-muted uppercase flex items-center space-x-2.5">
+                <span class="w-2 h-2 ${activeAccent.swatchClass} inline-block"></span>
+                <span>EXHIBITION INDEX — <strong class="${activeAccent.textClass} font-medium">${state.selectedCategory === 'ALL' ? 'ALL FOLIOS' : state.selectedCategory}</strong></span>
+              </div>
+              <div class="font-mono text-[10px] tracking-[0.2em] text-bronze">
+                ${String(filteredWorks.length).padStart(2, '0')} WORKS
+              </div>
+            </div>
+
+            <!-- 최근 게시물 리스트 (갤러리 쇼케이스 vitrine) -->
+            <div class="divide-y divide-mullion flex-1">
+              ${filteredWorks.map(work => {
+                const accent = getCategoryAccent(work.category);
+                return `
+                  <article
+                    onclick="openPost('${work.id}')"
+                    style="--accent-color: ${accent.hex};"
+                    class="gallery-vitrine group cursor-pointer px-6 md:px-14 py-12 md:py-14"
+                  >
+                    <div class="flex flex-wrap items-center justify-between gap-2 mb-5">
+                      <div class="flex items-center space-x-3.5 font-mono text-[10px] tracking-[0.2em]">
+                        <span class="px-2.5 py-0.5 border font-medium ${accent.badgeClass}">${work.category}</span>
+                        <span class="text-bronze uppercase">${work.categoryEn}</span>
+                        <span class="text-mullionStrong">/</span>
+                        <span class="text-muted">${work.date}</span>
+                      </div>
+                      <span class="font-mono text-[10px] tracking-[0.22em] text-bronze group-hover:${accent.textClass} hydraulic-transition">
+                        FOLIO ${work.roman} &nbsp;→
+                      </span>
+                    </div>
+
+                    <h2 class="vitrine-title font-display text-2xl sm:text-3xl md:text-[32px] font-normal tracking-tight text-ink leading-[1.3]">
+                      ${work.title}
+                    </h2>
+
+                    <p class="mt-4 text-sm md:text-[15px] text-muted font-light leading-[1.9] max-w-2xl whitespace-pre-line">
+                      ${work.excerpt}
+                    </p>
+
+                    <div class="mt-6 flex flex-wrap items-center gap-4">
+                      ${work.tags.map(tag => `
+                        <span class="font-mono text-[10px] tracking-[0.15em] text-bronze">#${tag}</span>
+                      `).join('')}
+                    </div>
+                  </article>
+                `;
+              }).join('')}
+            </div>
+
+            <!-- 전체 아카이브 진입 수평 바 -->
+            <div class="border-t border-mullion">
+              <button
+                onclick="navigateTo('archive', { category: 'ALL', seriesId: null })"
+                class="w-full px-6 md:px-14 py-7 flex items-center justify-between text-left bg-panel hover:bg-obsidian text-ink hover:text-canvas hydraulic-transition group"
+              >
+                <span class="font-mono text-[11px] tracking-[0.24em] uppercase">
+                  EXPLORE COMPLETE CURTAIN WALL ARCHIVE (${String(WORKS_DATA.length).padStart(2, '0')})
+                </span>
+                <span class="font-mono text-sm group-hover:translate-x-1.5 hydraulic-transition">→</span>
+              </button>
+            </div>
+          </section>
+        </div>
+      `;
+    }
+
+    // [VIEW B] ARCHIVE (전체 글 목록 — 3열 모듈형 커튼월 갤러리 격자)
+    function renderArchiveView() {
+      const works = getFilteredWorks();
+      const filterTabs = [
+        { key: 'ALL', label: '전체', activeBg: 'bg-obsidian text-canvas' },
+        { key: '시', label: '시', activeBg: 'bg-crimson text-canvas' },
+        { key: '사유', label: '사유', activeBg: 'bg-emerald text-canvas' },
+        { key: '비평', label: '비평', activeBg: 'bg-obsidian text-canvas' },
+      ];
+
+      return `
+        <div class="w-full flex-1 flex flex-col view-settle">
+          <!-- 상단 아카이브 헤더 트랜섬 -->
+          <div class="w-full px-6 md:px-14 py-10 md:py-14 border-b border-mullion bg-canvas">
+            <div class="flex flex-col md:flex-row md:items-end justify-between gap-8">
+              <div>
+                <div class="font-mono text-[9px] tracking-[0.25em] text-emerald uppercase mb-3">
+                  MODULAR ELEVATION CATALOGUE
+                </div>
+                <h1 class="font-display text-3xl md:text-5xl font-light tracking-tight text-ink">
+                  Archive <span class="italic text-bronze text-2xl md:text-3xl ml-2">(${String(works.length).padStart(2, '0')})</span>
+                </h1>
+              </div>
+
+              <!-- 필터 및 정렬 컨트롤 -->
+              <div class="flex flex-wrap items-center gap-4 md:gap-6">
+                <!-- 갈래 필터 -->
+                <div class="flex items-center border border-mullionStrong bg-vitrine">
+                  ${filterTabs.map(tab => {
+                    const active = state.selectedCategory === tab.key && !state.selectedSeriesId;
+                    return `
+                      <button
+                        onclick="state.selectedSeriesId = null; setCategoryFilter('${tab.key}')"
+                        class="px-4 py-2.5 text-[11px] font-mono tracking-[0.16em] hydraulic-transition border-r last:border-r-0 border-mullion ${active ? tab.activeBg : 'text-muted hover:text-ink'}"
+                      >
+                        ${tab.label}
+                      </button>
+                    `;
+                  }).join('')}
+                </div>
+
+                <!-- 정렬 버튼 -->
+                <div class="flex items-center border border-mullionStrong bg-vitrine">
+                  <button
+                    onclick="setSortOrder('desc')"
+                    class="px-3.5 py-2.5 text-[11px] font-mono tracking-[0.14em] border-r border-mullion hydraulic-transition ${state.sortOrder === 'desc' ? 'bg-panel text-ink font-medium' : 'text-bronze hover:text-ink'}"
+                  >
+                    최신순
+                  </button>
+                  <button
+                    onclick="setSortOrder('asc')"
+                    class="px-3.5 py-2.5 text-[11px] font-mono tracking-[0.14em] hydraulic-transition ${state.sortOrder === 'asc' ? 'bg-panel text-ink font-medium' : 'text-bronze hover:text-ink'}"
+                  >
+                    오래된순
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            ${state.selectedSeriesId ? `
+              <div class="mt-8 pt-4 border-t border-mullion flex items-center justify-between text-xs font-mono">
+                <span class="text-muted tracking-wider">COLLECTION FILTER: <strong class="text-ink">${SERIES_DATA.find(s => s.id === state.selectedSeriesId)?.title}</strong></span>
+                <button onclick="state.selectedSeriesId = null; render();" class="underline text-crimson tracking-wider">RESET FILTER</button>
+              </div>
+            ` : ''}
+          </div>
+
+          <!-- 3열 모듈형 커튼월 격자 (Mullion Grid) -->
+          <div class="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 border-b border-mullion flex-1">
+            ${works.map(work => {
+              const accent = getCategoryAccent(work.category);
+              return `
+                <article
+                  onclick="openPost('${work.id}')"
+                  style="--accent-color: ${accent.hex};"
+                  class="gallery-vitrine group cursor-pointer p-8 md:p-11 border-b border-mullion md:odd:border-r lg:odd:border-r-0 lg:[&:not(:nth-child(3n))]:border-r flex flex-col justify-between min-h-[340px]"
+                >
+                  <div>
+                    <!-- 모듈 상단 인덱스 & 갈래 -->
+                    <div class="flex items-center justify-between font-mono text-[10px] tracking-[0.2em] pb-4 mb-7 border-b border-mullion">
+                      <span class="flex items-center space-x-2.5 font-medium ${accent.textClass}">
+                        <span class="w-1.5 h-1.5 ${accent.swatchClass} inline-block"></span>
+                        <span>${work.roman} &nbsp;/&nbsp; ${work.category}</span>
+                      </span>
+                      <span class="text-bronze">${work.date}</span>
+                    </div>
+
+                    <!-- 제목 -->
+                    <h2 class="vitrine-title font-display text-2xl font-normal tracking-tight text-ink leading-[1.35] mb-5">
+                      ${work.title}
+                    </h2>
+
+                    <!-- 발췌문 -->
+                    <p class="text-sm text-muted font-light leading-[1.85] line-clamp-3 whitespace-pre-line">
+                      ${work.excerpt}
+                    </p>
+                  </div>
+
+                  <!-- 모듈 하단 태그 & 진입 화살표 -->
+                  <div class="pt-6 mt-10 border-t border-mullion flex items-center justify-between">
+                    <div class="flex flex-wrap gap-2.5">
+                      ${work.tags.map(t => `<span class="font-mono text-[10px] tracking-[0.14em] text-bronze">#${t}</span>`).join('')}
+                    </div>
+                    <span class="font-mono text-xs ${accent.textClass} group-hover:translate-x-1.5 hydraulic-transition">→</span>
+                  </div>
+                </article>
+              `;
+            }).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    // [VIEW C] POST VIEW (글 상세 페이지 — 갤러리 플레이트 / 모노그래프 / 비평 도시에)
+    function renderPostView() {
+      const currentIndex = WORKS_DATA.findIndex(w => w.id === state.currentPostId);
+      const work = WORKS_DATA[currentIndex] || WORKS_DATA[0];
+      const prevWork = currentIndex < WORKS_DATA.length - 1 ? WORKS_DATA[currentIndex + 1] : null;
+      const nextWork = currentIndex > 0 ? WORKS_DATA[currentIndex - 1] : null;
+      const accent = getCategoryAccent(work.category);
+
+      const typographyRuleMap = {
+        '시': 'GALLERY PLATE · 행갈이와 연의 여백을 원본 호흡대로 보존하며 크림슨 플럼 라인으로 프레이밍합니다.',
+        '사유': 'MONOGRAPH SPEC · 드롭캡과 넓은 단락 간격을 통해 개념의 전개 속도를 조율합니다.',
+        '비평': 'ARCHIVAL DOSSIER · 상단 서지 테이블과 옵시디언 인용 블록으로 비평적 좌표를 명시합니다.',
+      };
+
+      let bodyHtml = '';
+      if (work.category === '시') {
+        bodyHtml = `
+          <div class="bg-vitrine border border-mullion border-l-2 border-l-crimson p-8 sm:p-12 md:p-14">
+            <div class="font-mono text-[9px] tracking-[0.25em] text-crimson uppercase mb-8">
+              POETRY PLATE · ${work.roman}
+            </div>
+            <div class="typo-poetry text-base md:text-[17.5px]">${work.content}</div>
+          </div>
+        `;
+      } else if (work.category === '사유') {
+        bodyHtml = `<div class="typo-thought text-base md:text-[17px]">${work.content.map(block => {
+          if (block.type === 'h3') return `<h3>${block.text}</h3>`;
+          return `<p>${block.text}</p>`;
+        }).join('')}</div>`;
+      } else if (work.category === '비평') {
+        bodyHtml = `<div class="typo-criticism text-base md:text-[16.5px]">${work.content.map(block => {
+          if (block.type === 'quote') return `<blockquote>${block.text}</blockquote>`;
+          return `<p>${block.text}</p>`;
+        }).join('')}</div>`;
+      }
+
+      return `
+        <div class="w-full flex-1 flex flex-col view-settle">
+          <!-- 상단 복귀 바 -->
+          <div class="w-full flex flex-col lg:flex-row border-b border-mullion bg-panel/70">
+            <div class="w-full lg:w-[35%] px-6 md:px-10 py-3.5 border-b lg:border-b-0 lg:border-r border-mullion">
+              <button onclick="navigateTo('archive')" class="font-mono text-[10px] tracking-[0.22em] text-muted hover:text-obsidian hydraulic-transition flex items-center space-x-2.5 uppercase">
+                <span>←</span>
+                <span>RETURN TO ARCHIVE</span>
+              </button>
+            </div>
+            <div class="w-full lg:w-[65%] px-6 md:px-14 py-3.5 flex items-center justify-between font-mono text-[10px] tracking-[0.22em] text-bronze">
+              <span class="flex items-center space-x-2.5">
+                <span class="w-1.5 h-1.5 ${accent.swatchClass} inline-block"></span>
+                <span class="${accent.textClass} font-medium">FOLIO ${work.roman} · ${work.categoryEn}</span>
+              </span>
+              <span>READING TIME ${work.readingTime}</span>
+            </div>
+          </div>
+
+          <!-- 본문 2단 커튼월 구조 (좌측 35% 메타 슬롯 / 우측 65% 인피니티 여백 독서 영역) -->
+          <div class="w-full flex-1 flex flex-col lg:flex-row">
+            <!-- 좌측 메타데이터 슬롯 -->
+            <aside class="w-full lg:w-[35%] border-b lg:border-b-0 lg:border-r border-mullion bg-canvas">
+              <div class="lg:sticky lg:top-[95px] p-6 md:p-10 space-y-8">
+                <div>
+                  <div class="font-mono text-[9px] tracking-[0.25em] text-bronze uppercase mb-4">
+                    ARCHIVAL SPECIFICATION
+                  </div>
+                  <dl class="border-t border-mullion font-mono text-[11px]">
+                    <div class="py-3.5 border-b border-mullion flex justify-between">
+                      <dt class="text-bronze tracking-[0.16em]">FOLIO</dt>
+                      <dd class="text-ink font-medium">${work.no} (${work.roman})</dd>
+                    </div>
+                    <div class="py-3.5 border-b border-mullion flex justify-between">
+                      <dt class="text-bronze tracking-[0.16em]">GENRE</dt>
+                      <dd class="${accent.textClass} font-medium">${work.category} · ${work.categoryEn}</dd>
+                    </div>
+                    <div class="py-3.5 border-b border-mullion flex justify-between">
+                      <dt class="text-bronze tracking-[0.16em]">DATE</dt>
+                      <dd class="text-ink">${work.date}</dd>
+                    </div>
+                    <div class="py-3.5 border-b border-mullion flex justify-between items-start gap-4">
+                      <dt class="text-bronze tracking-[0.16em] shrink-0">KEYWORDS</dt>
+                      <dd class="text-ink text-right">${work.tags.map(t => `#${t}`).join(' ')}</dd>
+                    </div>
+                  </dl>
+                </div>
+
+                <!-- 갈래별 조판 규칙 안내 -->
+                <div class="p-5 border border-mullion border-l-2 ${accent.borderClass} bg-vitrine">
+                  <div class="font-mono text-[9px] tracking-[0.22em] ${accent.textClass} uppercase mb-2">
+                    TYPOGRAPHIC EDITION
+                  </div>
+                  <p class="text-xs text-muted leading-[1.8] font-light">
+                    ${typographyRuleMap[work.category]}
+                  </p>
+                </div>
+              </div>
+            </aside>
+
+            <!-- 우측 대형 유리 패널 본문 -->
+            <article class="w-full lg:w-[65%] px-6 sm:px-14 lg:px-24 py-14 md:py-24 bg-canvas">
+              <div class="max-w-[700px]">
+                <!-- 제목 영역 -->
+                <header class="pb-10 mb-12 border-b border-mullion">
+                  <div class="font-mono text-[10px] tracking-[0.22em] mb-4 flex items-center space-x-2.5">
+                    <span class="w-2 h-2 ${accent.swatchClass} inline-block"></span>
+                    <span class="${accent.textClass} font-medium">${work.category}</span>
+                    <span class="text-bronze">&nbsp;·&nbsp; ${work.date}</span>
+                  </div>
+                  <h1 class="font-display text-3xl sm:text-4xl md:text-[42px] font-normal tracking-tight text-ink leading-[1.25]">
+                    ${work.title}
+                  </h1>
+
+                  ${work.category === '비평' && work.targetWork ? `
+                    <!-- 비평 전용 아카이브 도시에(Dossier) 서지 테이블 -->
+                    <div class="mt-8 border border-mullion bg-vitrine text-xs font-mono">
+                      <div class="px-4 py-2.5 border-b border-mullion bg-panel text-[9px] tracking-[0.22em] text-obsidian uppercase">
+                        CRITICAL DOSSIER · BIBLIOGRAPHIC SUBJECT
+                      </div>
+                      <div class="divide-y divide-mullion">
+                        <div class="px-4 py-2.5 flex flex-col sm:flex-row sm:justify-between gap-1">
+                          <span class="text-bronze">SUBJECT</span>
+                          <span class="text-ink font-sans font-normal">${work.targetWork}</span>
+                        </div>
+                        <div class="px-4 py-2.5 flex flex-col sm:flex-row sm:justify-between gap-1">
+                          <span class="text-bronze">AUTHOR</span>
+                          <span class="text-ink">${work.targetAuthor || '—'}</span>
+                        </div>
+                        <div class="px-4 py-2.5 flex flex-col sm:flex-row sm:justify-between gap-1">
+                          <span class="text-bronze">EDITION</span>
+                          <span class="text-ink">${work.targetEdition || '—'}</span>
+                        </div>
+                      </div>
+                    </div>
+                  ` : ''}
+                </header>
+
+                <!-- 갈래별 조판 본문 -->
+                <div class="min-h-[320px]">
+                  ${bodyHtml}
+                </div>
+
+                <!-- 작성 메모 / 판형 노트 -->
+                ${work.metaNote ? `
+                  <div class="mt-20 pt-6 border-t border-mullion flex items-start space-x-3 text-xs text-muted">
+                    <span class="font-mono text-[10px] tracking-[0.2em] ${accent.textClass} uppercase shrink-0">COLOPHON /</span>
+                    <span class="font-light leading-relaxed">${work.metaNote}</span>
+                  </div>
+                ` : ''}
+              </div>
+            </article>
+          </div>
+
+          <!-- 하단 이전 글 / 다음 글 수평 스팬 내비게이션 -->
+          <div class="w-full grid grid-cols-1 md:grid-cols-2 border-t border-mullion bg-vitrine">
+            <div class="border-b md:border-b-0 md:border-r border-mullion">
+              ${prevWork ? `
+                <button onclick="openPost('${prevWork.id}')" class="w-full h-full px-6 md:px-14 py-8 text-left hover:bg-panel hydraulic-transition group">
+                  <div class="font-mono text-[9px] tracking-[0.22em] text-bronze mb-2">← PREVIOUS FOLIO / ${prevWork.category}</div>
+                  <div class="font-display text-lg md:text-xl text-ink group-hover:translate-x-1 hydraulic-transition">${prevWork.title}</div>
+                </button>
+              ` : `
+                <div class="px-6 md:px-14 py-8 font-mono text-[10px] tracking-[0.2em] text-bronze">FIRST ARCHIVED FOLIO</div>
+              `}
+            </div>
+            <div>
+              ${nextWork ? `
+                <button onclick="openPost('${nextWork.id}')" class="w-full h-full px-6 md:px-14 py-8 text-left md:text-right hover:bg-panel hydraulic-transition group">
+                  <div class="font-mono text-[9px] tracking-[0.22em] text-bronze mb-2">NEXT FOLIO / ${nextWork.category} →</div>
+                  <div class="font-display text-lg md:text-xl text-ink group-hover:-translate-x-1 hydraulic-transition">${nextWork.title}</div>
+                </button>
+              ` : `
+                <div class="px-6 md:px-14 py-8 md:text-right font-mono text-[10px] tracking-[0.2em] text-bronze">LATEST ARCHIVED FOLIO</div>
+              `}
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // [VIEW D] SERIES (연재 및 주제별 컬렉션 뷰)
+    function renderSeriesView() {
+      return `
+        <div class="w-full flex-1 flex flex-col view-settle">
+          <div class="px-6 md:px-14 py-12 md:py-16 border-b border-mullion bg-canvas">
+            <div class="font-mono text-[9px] tracking-[0.25em] text-crimson uppercase mb-3">
+              CURATED HORIZONTAL COLLECTIONS
+            </div>
+            <h1 class="font-display text-3xl md:text-5xl font-light tracking-tight text-ink">
+              Series &amp; <span class="italic text-bronze">Collections</span>
+            </h1>
+            <p class="mt-4 text-sm text-muted font-light max-w-2xl leading-relaxed">
+              단편적인 게시물들을 하나의 건축적 축으로 엮어낸 연작 시 판화, 사유 모노그래프, 비평 도시에 묶음입니다.
+            </p>
+          </div>
+
+          <div class="divide-y divide-mullion flex-1">
+            ${SERIES_DATA.map(series => {
+              const items = WORKS_DATA.filter(w => w.seriesId === series.id);
+              const accent = getCategoryAccent(series.accentKey);
+              return `
+                <section class="w-full flex flex-col lg:flex-row">
+                  <!-- 좌측 35% 시리즈 정보 -->
+                  <div class="w-full lg:w-[35%] p-8 md:p-12 border-b lg:border-b-0 lg:border-r border-mullion border-l-2 ${accent.borderClass} bg-vitrine flex flex-col justify-between">
+                    <div>
+                      <div class="flex items-center space-x-2.5 font-mono text-[10px] tracking-[0.22em] font-medium mb-2 ${accent.textClass}">
+                        <span class="w-1.5 h-1.5 ${accent.swatchClass} inline-block"></span>
+                        <span>${series.code}</span>
+                      </div>
+                      <div class="font-mono text-[9px] tracking-[0.2em] text-bronze mb-5">${series.category}</div>
+                      <h2 class="font-display text-2xl font-normal text-ink tracking-tight mb-4 leading-snug">${series.title}</h2>
+                      <p class="text-xs md:text-sm text-muted font-light leading-[1.85]">${series.description}</p>
+                    </div>
+                    <div class="mt-10 pt-5 border-t border-mullion flex items-center justify-between font-mono text-[10px] tracking-[0.18em] text-bronze">
+                      <span>${series.period}</span>
+                      <button onclick="navigateTo('archive', { category: 'ALL', seriesId: '${series.id}' })" class="${accent.textClass} font-medium hover:underline">
+                        INDEX (${String(items.length).padStart(2, '0')}) →
+                      </button>
+                    </div>
+                  </div>
+
+                  <!-- 우측 65% 수록 작품 슬롯 -->
+                  <div class="w-full lg:w-[65%] divide-y divide-mullion bg-canvas">
+                    ${items.map(item => `
+                      <div onclick="openPost('${item.id}')" style="--accent-color: ${accent.hex};" class="gallery-vitrine px-6 md:px-14 py-8 flex items-center justify-between cursor-pointer group">
+                        <div>
+                          <div class="font-mono text-[10px] tracking-[0.2em] text-bronze mb-1.5">FOLIO ${item.roman} · ${item.date}</div>
+                          <div class="vitrine-title font-display text-xl md:text-2xl text-ink">${item.title}</div>
+                        </div>
+                        <span class="font-mono text-[10px] tracking-[0.2em] text-bronze group-hover:${accent.textClass} hydraulic-transition">READ →</span>
+                      </div>
+                    `).join('')}
+                  </div>
+                </section>
+              `;
+            }).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    // [VIEW E] ABOUT (작가 소개 및 커튼월 건축 설계 명세)
+    function renderAboutView() {
+      return `
+        <div class="w-full flex-1 flex flex-col lg:flex-row view-settle">
+          <!-- 좌측 35% Smoked Obsidian 작가 및 건축 콘셉트 플린스 -->
+          <div class="w-full lg:w-[35%] p-8 md:p-12 border-b lg:border-b-0 lg:border-r border-mullion bg-obsidian text-canvas flex flex-col justify-between">
+            <div>
+              <div class="font-mono text-[9px] tracking-[0.25em] text-emerald uppercase mb-4">
+                ARCHITECTURAL MONOGRAPH
+              </div>
+              <h1 class="font-display text-3xl md:text-4xl font-light tracking-tight text-canvas mb-6">
+                윤서진 <span class="italic text-bronze font-light block text-2xl mt-1">Yoon Seo-jin</span>
+              </h1>
+              <p class="text-sm text-white/70 font-light leading-[1.9] mb-8">
+                시를 쓰고, 사유의 단상을 기록하며, 텍스트와 공간의 구조를 비평합니다. 장르의 경계에 갇히지 않는 글쓰기를 지향하며 모든 결과물을 이 단일 커튼월 아카이브에 수록합니다.
+              </p>
+              <div class="p-5 border border-white/15 border-l-2 border-l-crimson bg-obsidianSoft">
+                <div class="font-mono text-[9px] tracking-[0.22em] text-bronze uppercase mb-2">CORRESPONDENCE</div>
+                <div class="font-mono text-xs text-canvas tracking-wider">archive@seojinyoon-lit.kr</div>
+              </div>
+            </div>
+
+            <div class="mt-12 pt-6 border-t border-white/10 font-mono text-[9px] tracking-[0.2em] text-bronze leading-relaxed uppercase">
+              ARCHITECTURAL REFERENCE:<br />
+              CURTAIN WALL SYSTEM &amp; THE ONE (BEL AIR, LOS ANGELES)<br />
+              WARM ALABASTER · SMOKED OBSIDIAN · ANODIZED BRONZE
+            </div>
+          </div>
+
+          <!-- 우측 65% 갈래 정의 기준 및 설계 원칙 표 -->
+          <div class="w-full lg:w-[65%] divide-y divide-mullion bg-canvas">
+            <div class="p-8 md:p-14">
+              <div class="font-mono text-[9px] tracking-[0.25em] text-bronze uppercase mb-6">
+                01 / GENRE TAXONOMY &amp; GALLERY COLOR CODING
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-3 border border-mullion divide-y md:divide-y-0 md:divide-x divide-mullion bg-vitrine">
+                <div class="p-7 border-t-2 border-t-crimson">
+                  <div class="font-mono text-[10px] tracking-[0.2em] text-crimson font-medium mb-3 flex items-center space-x-2">
+                    <span class="w-2 h-2 bg-crimson inline-block"></span>
+                    <span>시 · POETRY</span>
+                  </div>
+                  <p class="text-xs text-muted font-light leading-[1.85]">
+                    논리로 환원되기 전의 감각과 이미지의 압축. 크림슨 레드 플럼 라인과 갤러리 판화 여백으로 호흡을 구축합니다.
+                  </p>
+                </div>
+                <div class="p-7 border-t-2 border-t-emerald">
+                  <div class="font-mono text-[10px] tracking-[0.2em] text-emerald font-medium mb-3 flex items-center space-x-2">
+                    <span class="w-2 h-2 bg-emerald inline-block"></span>
+                    <span>사유 · THOUGHT</span>
+                  </div>
+                  <p class="text-xs text-muted font-light leading-[1.85]">
+                    스스로 세운 질문에서 출발해 개념의 균열을 추적하는 모노그래프. 에메랄드 그린 드롭캡과 단락 비례로 사유를 전개합니다.
+                  </p>
+                </div>
+                <div class="p-7 border-t-2 border-t-obsidian">
+                  <div class="font-mono text-[10px] tracking-[0.2em] text-obsidian font-medium mb-3 flex items-center space-x-2">
+                    <span class="w-2 h-2 bg-obsidian inline-block"></span>
+                    <span>비평 · CRITICISM</span>
+                  </div>
+                  <p class="text-xs text-muted font-light leading-[1.85]">
+                    작품과 매체 구조를 측량하는 비평 도시에. 스모크드 옵시디언 대비로 서지 좌표와 인용을 선명히 부각합니다.
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <div class="p-8 md:p-14">
+              <div class="font-mono text-[9px] tracking-[0.25em] text-bronze uppercase mb-6">
+                02 / ARCHITECTURAL MATERIALITY &amp; CRAFT SPECIFICATION
+              </div>
+              <div class="border border-mullion divide-y divide-mullion text-xs bg-vitrine">
+                <div class="p-5 flex flex-col sm:flex-row sm:justify-between gap-2">
+                  <span class="font-mono tracking-[0.16em] text-ink">ANODIZED BRONZE MULLIONS</span>
+                  <span class="text-muted font-light">1px 헤어라인과 조이너리 십자(+) 마크로 커튼월 접합부의 정밀도 구현</span>
+                </div>
+                <div class="p-5 flex flex-col sm:flex-row sm:justify-between gap-2">
+                  <span class="font-mono tracking-[0.16em] text-ink">ALABASTER &amp; OBSIDIAN</span>
+                  <span class="text-muted font-light">석회암 아이보리 유리면(#F7F5F0)과 스모크드 옵시디언(#0E0E0E) 기단부의 건축적 대비</span>
+                </div>
+                <div class="p-5 flex flex-col sm:flex-row sm:justify-between gap-2">
+                  <span class="font-mono tracking-[0.16em] text-ink">HYDRAULIC MOTION</span>
+                  <span class="text-muted font-light">cubic-bezier(0.19, 1, 0.22, 1) 감속 곡선으로 미술관 쇼케이스처럼 묵직하게 반응하는 인터랙션</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    // =========================================================================
+    // 5. 메인 렌더 루프 및 내비게이션 상태 동기화
+    // =========================================================================
+    function render() {
+      const root = document.getElementById('appRoot');
+
+      // 상단 내비게이션 활성 탭 표시 업데이트 (옵시디언 + 크림슨 언더라인)
+      document.querySelectorAll('.nav-btn').forEach(btn => {
+        const target = btn.getAttribute('data-nav');
+        const isCurrent =
+          state.view === target ||
+          (state.view === 'post' && target === 'archive');
+
+        if (isCurrent) {
+          btn.classList.add('text-ink', 'font-medium');
+          btn.classList.remove('text-bronze');
+          btn.style.boxShadow = 'inset 0 -2px 0 #C81D25';
+        } else {
+          btn.classList.remove('text-ink', 'font-medium');
+          btn.classList.add('text-bronze', 'hover:text-ink');
+          btn.style.boxShadow = 'none';
+        }
+      });
+
+      // 현재 뷰 렌더링
+      switch (state.view) {
+        case 'index':
+          root.innerHTML = renderIndexView();
+          break;
+        case 'archive':
+          root.innerHTML = renderArchiveView();
+          break;
+        case 'series':
+          root.innerHTML = renderSeriesView();
+          break;
+        case 'about':
+          root.innerHTML = renderAboutView();
+          break;
+        case 'post':
+          root.innerHTML = renderPostView();
+          break;
+        default:
+          root.innerHTML = renderIndexView();
+      }
+    }
+
+    // 초기 실행
+    window.addEventListener('DOMContentLoaded', () => {
+      render();
+      updateReadingProgress();
+    });
+  </script>
+</body>
+</html>
